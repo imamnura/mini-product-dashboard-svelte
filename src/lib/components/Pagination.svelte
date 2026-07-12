@@ -8,9 +8,9 @@
   let { currentPage, totalPages, onPageChange }: Props = $props();
 </script>
 
-<div class="flex items-center justify-center gap-2 mt-6">
+<div class="mt-8 flex items-center justify-center gap-2">
   <button
-    class="px-3 py-1 border rounded disabled:opacity-50 dark:border-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+    class="rounded-lg border border-violet-200 px-3 py-1.5 text-sm font-medium text-violet-900 transition-colors hover:bg-violet-100 disabled:opacity-40 disabled:hover:bg-transparent dark:border-violet-800 dark:text-violet-200 dark:hover:bg-violet-900/40"
     onclick={() => onPageChange(currentPage - 1)}
     disabled={currentPage === 1}
   >
@@ -19,8 +19,9 @@
 
   {#each Array(totalPages) as _, i}
     <button
-      class="px-3 py-1 border rounded hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-800"
-      class:selected={currentPage === i + 1}
+      class="rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors {currentPage === i + 1
+        ? 'border-violet-600 bg-violet-600 text-white shadow-sm shadow-violet-500/30'
+        : 'border-violet-200 text-violet-900 hover:bg-violet-100 dark:border-violet-800 dark:text-violet-200 dark:hover:bg-violet-900/40'}"
       onclick={() => onPageChange(i + 1)}
     >
       {i + 1}
@@ -28,17 +29,10 @@
   {/each}
 
   <button
-    class="px-3 py-1 border rounded disabled:opacity-50 dark:border-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+    class="rounded-lg border border-violet-200 px-3 py-1.5 text-sm font-medium text-violet-900 transition-colors hover:bg-violet-100 disabled:opacity-40 disabled:hover:bg-transparent dark:border-violet-800 dark:text-violet-200 dark:hover:bg-violet-900/40"
     onclick={() => onPageChange(currentPage + 1)}
     disabled={currentPage === totalPages}
   >
     Next ›
   </button>
 </div>
-
-<style>
-  .selected {
-    background-color: #2563eb;
-    color: white;
-  }
-</style>

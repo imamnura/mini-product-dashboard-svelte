@@ -3,7 +3,7 @@
   import { getProducts, getCategories } from '$lib/utils/api';
   import ProductCard from '$lib/components/ProductCard.svelte';
   import Pagination from '$lib/components/Pagination.svelte';
-  import { productsStore, darkModeStore } from '$lib/store/products';
+  import { productsStore } from '$lib/store/products';
   import { get } from 'svelte/store';
   import { debounce } from '$lib/utils/debounce';
 
@@ -47,29 +47,23 @@
 
 </script>
 
-<div class="p-6 max-w-6xl mx-auto">
-  <div class="flex flex-row items-center mb-6 justify-between">
-    <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">🛍️ FakeStore Dashboard</h1>
-    <button
-      onclick={() => darkModeStore.toggle()}
-      class="fixed top-4 right-4 bg-gray-200 dark:bg-gray-700 p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-      aria-label="Toggle dark mode"
-    >
-      {$darkModeStore ? '🌙' : '☀️'}
-    </button>
+<div class="mx-auto max-w-6xl p-6">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-violet-950 dark:text-white">🛍️ Product catalog</h1>
+    <p class="text-sm text-violet-900/60 dark:text-violet-200/60">Discover products from the FakeStore catalog.</p>
   </div>
 
   <!-- Filter & Search -->
-  <div class="flex flex-wrap gap-2 mb-4">
-    <input 
-      placeholder="Cari produk.." 
-      bind:value={search} 
-      class="border rounded p-2 w-full md:w-1/3 dark:bg-gray-800 dark:text-white dark:border-gray-600" 
-      oninput={(e) => debouncedSearch((e.target as HTMLInputElement).value)} 
+  <div class="mb-6 flex flex-wrap gap-3">
+    <input
+      placeholder="Cari produk.."
+      bind:value={search}
+      class="w-full rounded-xl border border-violet-200 bg-white/80 p-2.5 text-sm text-violet-950 shadow-sm outline-none transition-colors focus:border-violet-400 focus:ring-2 focus:ring-violet-200 md:w-1/3 dark:border-violet-800 dark:bg-violet-950/40 dark:text-white dark:focus:ring-violet-800"
+      oninput={(e) => debouncedSearch((e.target as HTMLInputElement).value)}
     />
-    <select 
-      bind:value={selectedCategory} 
-      class="border rounded p-2 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+    <select
+      bind:value={selectedCategory}
+      class="rounded-xl border border-violet-200 bg-white/80 p-2.5 text-sm text-violet-950 shadow-sm outline-none transition-colors focus:border-violet-400 focus:ring-2 focus:ring-violet-200 dark:border-violet-800 dark:bg-violet-950/40 dark:text-white dark:focus:ring-violet-800"
     >
       <option value="">Semua Kategori</option>
       {#each categories as c}
@@ -79,7 +73,11 @@
   </div>
 
   {#if loading}
-  <p class="dark:text-white">Loading...</p>
+  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    {#each Array(6) as _}
+      <div class="glass-panel h-64 animate-pulse rounded-2xl"></div>
+    {/each}
+  </div>
   {:else}
   <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     {#each filtered as product}

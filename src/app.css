@@ -3,15 +3,46 @@
 /* Tailwind v4 Dark Mode Configuration */
 @theme {
   --color-surface: #ffffff;
-  --color-surface-dark: #0f172a;
+  --color-surface-dark: #0f0a1f;
 }
 
 :root {
   color-scheme: light;
+
+  /* Chart chrome — light */
+  --chart-surface: #fdfcff;
+  --chart-ink: #1e1b2e;
+  --chart-ink-secondary: #56507a;
+  --chart-ink-muted: #948fb0;
+  --chart-grid: #e7e2f5;
+  --chart-baseline: #c9c2e8;
+  --chart-accent: #7c3aed;
+  --chart-accent-soft: rgba(124, 58, 237, 0.12);
+
+  /* Validated categorical palette (see dataviz skill palette validation) */
+  --chart-cat-1: #4a3aa7; /* violet */
+  --chart-cat-2: #e87ba4; /* magenta */
+  --chart-cat-3: #eda100; /* amber */
+  --chart-cat-4: #008300; /* green */
 }
 
 :root.dark {
   color-scheme: dark;
+
+  /* Chart chrome — dark */
+  --chart-surface: #1e1735;
+  --chart-ink: #f5f3ff;
+  --chart-ink-secondary: #c9c2e8;
+  --chart-ink-muted: #948fb0;
+  --chart-grid: #362c54;
+  --chart-baseline: #4a3d73;
+  --chart-accent: #a78bfa;
+  --chart-accent-soft: rgba(167, 139, 250, 0.16);
+
+  --chart-cat-1: #9085e9;
+  --chart-cat-2: #d55181;
+  --chart-cat-3: #c98500;
+  --chart-cat-4: #008300;
 }
 
 img {
@@ -19,26 +50,48 @@ img {
 }
 
 .dark img {
-  filter: brightness(0.8);
+  filter: brightness(0.85);
 }
 
 /* Ensure dark mode backgrounds work properly */
 html {
-  background-color: white;
+  background-color: #faf8ff;
   transition: background-color 0.2s ease-in-out;
 }
 
 html.dark {
-  background-color: #0f172a;
+  background-color: #0f0a1f;
 }
 
 body {
-  background-color: white;
-  color: #1f2937;
+  background-color: #faf8ff;
+  background-image:
+    radial-gradient(60rem 30rem at 100% -10%, rgba(167, 139, 250, 0.16), transparent 60%),
+    radial-gradient(50rem 24rem at -10% 0%, rgba(216, 180, 254, 0.18), transparent 55%);
+  background-attachment: fixed;
+  color: #1e1b2e;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 html.dark body {
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: #0f0a1f;
+  background-image:
+    radial-gradient(60rem 30rem at 100% -10%, rgba(124, 58, 237, 0.22), transparent 60%),
+    radial-gradient(50rem 24rem at -10% 0%, rgba(88, 28, 135, 0.28), transparent 55%);
+  color: #f1edff;
+}
+
+/* Reusable elegant surface for cards / panels */
+.glass-panel {
+  background-color: color-mix(in srgb, var(--chart-surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+}
+
+.dark .glass-panel {
+  border: 1px solid rgba(167, 139, 250, 0.16);
+}
+
+::selection {
+  background-color: rgba(167, 139, 250, 0.35);
 }

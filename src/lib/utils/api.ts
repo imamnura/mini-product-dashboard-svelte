@@ -1,4 +1,4 @@
-import type { Product, Category, PaginatedResponse } from '$lib/types';
+import type { Product, Category, PaginatedResponse, Cart, CartItem } from '$lib/types';
 
 const BASE_URL = 'https://fakestoreapi.com';
 
@@ -48,6 +48,43 @@ class ApiClient {
   async getProductsByCategory(category: string): Promise<Product[]> {
     return this.fetchWithErrorHandling<Product[]>(`${this.baseUrl}/products/category/${category}`);
   }
+
+  async getAllProducts(): Promise<Product[]> {
+    return this.fetchWithErrorHandling<Product[]>(`${this.baseUrl}/products`);
+  }
+
+  async login(username: string, password: string): Promise<string> {
+    const res = await fetch(`${this.baseUrl}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) {
+      throw new Error('Invalid username or password');
+    }
+
+    const { token } = await res.json();
+    return token;
+  }
+
+  async getCartsByUser(userId: number): Promise<Cart[]> {
+    return this.fetchWithErrorHandling<Cart[]>(`${this.baseUrl}/carts/user/${userId}`);
+  }
+
+  async createCart(userId: number, products: CartItem[]): Promise<Cart> {
+    const res = await fetch(`${this.baseUrl}/carts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, date: new Date().toISOString(), products })
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return res.json();
+  }
 }
 
 // Export singleton instance
@@ -58,3 +95,7 @@ export const getProducts = (limit?: number, page?: number) => apiClient.getProdu
 export const getProductById = (id: number) => apiClient.getProductById(id);
 export const getCategories = () => apiClient.getCategories();
 export const getProductsByCategory = (category: string) => apiClient.getProductsByCategory(category);
+export const getAllProducts = () => apiClient.getAllProducts();
+export const login = (username: string, password: string) => apiClient.login(username, password);
+export const getCartsByUser = (userId: number) => apiClient.getCartsByUser(userId);
+export const createCart = (userId: number, products: CartItem[]) => apiClient.createCart(userId, products);

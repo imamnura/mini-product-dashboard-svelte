@@ -24,3 +24,26 @@ export interface ApiError {
 }
 
 export type Category = string;
+
+export interface CartItem {
+  productId: number;
+  quantity: number;
+}
+
+export interface Cart {
+  id: number;
+  userId: number;
+  date: string;
+  products: CartItem[];
+}
+
+export interface AuthUser {
+  userId: number;
+  username: string;
+}
+
+export interface CartLineItem {
+  product: Product;
+  quantity: number;
+}
+
