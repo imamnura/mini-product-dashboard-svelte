@@ -5,6 +5,7 @@ import type { Product, Category } from '$lib/types';
 export const productsStore: Writable<Product[]> = writable<Product[]>([]);
 export const categoriesStore: Writable<Category[]> = writable<Category[]>([]);
 export const selectedCategoryStore: Writable<string> = writable<string>('all');
+export const paginationStore: Writable<{ currentPage: number; totalPages: number }> = writable({ currentPage: 1, totalPages: 1 });
 
 // Dark mode store with localStorage persistence
 interface DarkModeStore {

@@ -3,7 +3,7 @@
   import { getProducts, getCategories } from '$lib/utils/api';
   import ProductCard from '$lib/components/ProductCard.svelte';
   import Pagination from '$lib/components/Pagination.svelte';
-  import { productsStore } from '$lib/store/products';
+  import { productsStore, paginationStore } from '$lib/store/products';
   import { get } from 'svelte/store';
   import { debounce } from '$lib/utils/debounce';
 
@@ -23,6 +23,7 @@
     totalPages = tp;
     loading = false;
     productsStore.set(products);
+    paginationStore.set({ currentPage, totalPages });
   }
 
   function handlePageChange(page: number) {
@@ -34,6 +35,7 @@
     const cached = get(productsStore);
     if (cached.length) {
       products = cached;
+      ({ currentPage, totalPages } = get(paginationStore));
       loading = false;
     } else {
       await loadData();

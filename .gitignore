@@ -36,4 +36,6 @@ yarn-error.log*
 next-env.d.ts
 .svelte-kit/
 /svelte.config.ts
-log/
+logs/
+dev-err.log
+dev-out.log
